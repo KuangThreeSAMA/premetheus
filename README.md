@@ -1,8 +1,9 @@
-# premetheus
 
-所有的配置文件都在https://github.com/HalfCoke/prometheusAndGrafana
+所有的配置文件都在https://github.com/HalfCoke/prometheusAndGrafana 
 这里只是对上面安装过程中出现的一些问题提出解决方法
+Grafana由于有总的监视系统所以就没有进行部署
 
+# prometheus
 prometheus部署的时候需要更改--web.listen-address参数
 
 > ```
@@ -48,6 +49,7 @@ sudo systemctl daemon-reload
 sudo service prometheus restart
 ```
 
+# node_exporter
 node_exporter执行setupNodeExporter会报错是因为文件权限的问题
 
 ```
@@ -56,16 +58,25 @@ sudo chmod 755 /etc/init.d/node_exporter
 sudo chmod 755 node_exporter
 ```
 
+# 其他辅助命令
 查看端口配占用情况
 
 ```
 sudo netstat -tlnp | grep 端口号
 ```
 
-查看进程状态（如premetheus或者防火墙，可能需要加入服务才能使用）
+查看服务进程状态（如premetheus或者防火墙，可能需要加入服务才能使用）
 
 ```
 systemctl status prometheus
 systemctl status firewalld
+```
+
+关闭防火墙
+```
+#暂时关闭防火墙
+systemctl stop prometheus
+#永久关闭防火墙
+systemctl disable prometheus
 ```
 
