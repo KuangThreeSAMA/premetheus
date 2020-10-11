@@ -21,7 +21,9 @@ prometheus部署的时候需要更改--web.listen-address参数
 
 同时需要更改监听目标，将整个集群都放入进去，具体操作为
 
-> `sudo vi /etc/prometheus/prometheus.yml`
+>``` 
+>sudo vi /etc/prometheus/prometheus.yml
+>```
 >
 > 将其中的targets字段复制添加，并改为想监听的机器ip和端口号
 >
