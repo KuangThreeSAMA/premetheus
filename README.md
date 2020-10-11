@@ -67,7 +67,7 @@ sudo chmod 755 node_exporter
 sudo netstat -tlnp | grep 端口号
 ```
 
-查看服务进程状态（如premetheus或者防火墙，可能需要加入服务才能使用）
+查看服务进程状态（如premetheus或者防火墙，需要加入服务才能使用）
 
 ```
 systemctl status prometheus
