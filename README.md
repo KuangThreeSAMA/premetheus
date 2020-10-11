@@ -1,6 +1,8 @@
 
-所有的配置文件都在https://github.com/HalfCoke/prometheusAndGrafana 
+所有的配置文件都在https://github.com/HalfCoke/prometheusAndGrafana
+
 这里只是对上面安装过程中出现的一些问题提出解决方法
+
 Grafana由于有总的监视系统所以就没有进行部署
 
 # prometheus
