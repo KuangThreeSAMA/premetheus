@@ -83,6 +83,8 @@ sudo chmod 755 node_exporter
 >sudo sed -i s/;http_port = 3000/http_port = 3000/ /etc/grafana/conf/custom.ini
 >```
 
+grafana最后需要一个模板来查看信息，这是使用的是`8919`
+
 
 # 其他辅助命令
 查看端口配占用情况
