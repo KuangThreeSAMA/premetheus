@@ -3,8 +3,6 @@
 
 这里只是对上面安装过程中出现的一些问题提出解决方法
 
-Grafana由于有总的监视系统所以就没有进行部署
-
 # prometheus
 prometheus部署的时候需要更改--web.listen-address参数
 
@@ -32,7 +30,7 @@ prometheus部署的时候需要更改--web.listen-address参数
 >
 > ```
 > - targets: ['localhost:9090']
-> - targets: ['目标ip:端口号']
+> - targets: ['目标ip:端口号']   #node_exporter默认是9100
 >   labels:
 >     instance:节点号或机器名称   #注意yml文件里面不要有制表符即tab
 > ```
@@ -55,10 +53,35 @@ sudo service prometheus restart
 node_exporter执行setupNodeExporter会报错是因为文件权限的问题
 
 ```
-sudo chmod 755 /etc/init.d/node_exporter
+sudo chmod 755 /etc/init.d/grafana
 #或者在执行setupNodeExporter先在对应文件夹执行
+sudo chmod 755 grafana
+```
+
+# grafana
+由于有总的监控系统，所以这里只是在验证性安装
+
+grafana出现的问题与上面node_exporter基本相同
+
+```
+sudo chmod 755 /etc/init.d/
+#或者在执行setupGrafana先在对应文件夹执行
 sudo chmod 755 node_exporter
 ```
+
+还需要更改监听端口，否则不能正常访问
+
+>```
+>sudo vi /etc/grafana/conf/custom.ini
+>```
+>
+>将其中`;http_port = 3000`的分号去掉
+>
+>也可以用sed命令
+>
+>```
+>sudo sed -i s/;http_port = 3000/http_port = 3000/ /etc/grafana/conf/custom.ini
+>```
 
 # 其他辅助命令
 查看端口配占用情况
