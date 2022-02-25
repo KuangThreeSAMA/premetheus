@@ -3,6 +3,8 @@
 
 这里只是对上面安装过程中出现的一些问题提出解决方法
 
+安装过程都是只需要执行对应的setup文件
+
 # prometheus
 prometheus部署的时候需要更改--web.listen-address参数
 
@@ -108,3 +110,42 @@ systemctl stop prometheus
 systemctl disable prometheus
 ```
 
+# ubuntu解决方法
+
+主要是setup和对应开机自启动的文件有问题
+
+## setup文件
+
+setup中`chkconfig`命令在ubuntu中被更换为`sysv-rc-conf`
+
+sysv-rc-conf没有--add直接删除该行
+
+sysv-rc-conf若无法apt安装
+
+则
+
+```shell
+sudo vi /etc/apt/sources.list
+#并加入下面这一行
+deb http://archive.ubuntu.com/ubuntu/ trusty main universe restricted multiverse
+```
+
+setup执行之后会出现无service文件的情况去`/etc/init.d`下找到对应的文件输入`./文件名 start`，这时sudo netstat -tlnp能看到已启动，但是该启动的不受systemctl控制，需要将进程kill掉然后通过systemctl重新启动
+
+## 开机自启动文件
+
+为相应的名字文件如node_exporter、prometheus(权限应为755)
+
+`. /etc/init.d/functions` 应该为`. /lib/lsb/init-functions `或删除
+
+start函数中`action $"Starting $DESC..." su -s /bin/sh -c`应被删掉 并把后面的引号也删除
+
+若想添加认证则可以
+
+```shell
+  if ! [ $(id -u) = 0 ]; then
+    echo "The script need to be run as root." >&2
+    exit 1
+  fi
+  nohup $prog_path $options >> $prog_logs 2>&1 & 2> /dev/null
+```
