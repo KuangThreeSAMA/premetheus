@@ -128,13 +128,15 @@ sysv-rc-conf若无法apt安装
 sudo vi /etc/apt/sources.list
 #并加入下面这一行
 deb http://archive.ubuntu.com/ubuntu/ trusty main universe restricted multiverse
+#并执行
+sudo apt-get update
 ```
 
 setup执行之后会出现无service文件的情况去`/etc/init.d`下找到对应的文件输入`./文件名 start`，这时sudo netstat -tlnp能看到已启动，但是该启动的不受systemctl控制，需要将进程kill掉然后通过systemctl重新启动
 
 ## 开机自启动文件
 
-为相应的名字文件如node_exporter、prometheus(权限应为755)
+为相应的名字文件如node_exporter、prometheus(应为可执行文件)
 
 `. /etc/init.d/functions` 应该为`. /lib/lsb/init-functions `或删除
 
